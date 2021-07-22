@@ -62,9 +62,9 @@ int main()
 			if (mistakes == 8) // Кількість спроб до закінчення гри.
 			{
 				cout << "Ви програли гру, пощастить наступного разу!" << endl;
+				cout << "Слово, що було загадане - "<< word << endl;
 				auto end = Clock::now();
 				auto ms = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
-
 				cout << "Час у грі зайняв " << ms << " секунд" << std::endl;
 				break;
 			}
@@ -75,16 +75,24 @@ int main()
 void CheckInput(string& input, char& letter, vector <char>& tempLetters, int mistakes, vector <char> tempWord)
 {
 	bool duplicate = false;
-	while (input.size() > 1 || (!(input[0] >= 'а' && input[0] <= 'я') && !(input[0] >= 'А' && input[0] <= 'Я'))) //Input has to be a single letter from a-z.
+	while (input.size() > 1 || (!(input[0] >= 'а' && input[0] <= 'я') && !(input[0] >= 'А' && input[0] <= 'Я') && !(input[0] >= 'Є') && !(input[0] >= 'є') && !(input[0] >= 'Ї') && !(input[0] >= 'ї') && !(input[0] >= 'І') && !(input[0] >= 'і') && !(input[0] >= 'Ґ') && !(input[0] >= 'ґ'))) //Введення має бути однією літерою від а-я.
 	{
 		PrintInfo(tempWord, mistakes, tempLetters);
 		Gallows(mistakes);
-		cout << "Неправильне введення. Будь ласка, введіть одну букву a-z:";
+		cout << "Неправильне введення. Будь ласка, введіть одну букву а-я:";
 		getline(cin, input);
 	}
-	//if (input[0] >= 'A' && input[0] <= 'Z') // перетворює велику літеру на малу.
-	//	letter = input[0] + 32;
-	/*else*/
+
+	if ('А' <= input[0] && input[0] <= 'Я') /*перетворює велику літеру на малу.*/
+		letter = input[0] + 32;
+	else if ('Є' == input[0] || input[0] == 'Ї')
+		letter = input[0] + 16;
+	else if ('І' == input[0])
+		letter = input[0] + 1;
+	else if ('Ґ' == input[0])
+		letter = input[0] + 15;
+
+	else
 		letter = input[0];
 	for (int i = 0; i < tempLetters.size(); i++) // Перевіряє, чи введена буква вже була введена раніше.
 	{
