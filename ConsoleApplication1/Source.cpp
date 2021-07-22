@@ -6,7 +6,7 @@
 #include "Gallows.h" 
 #include "File.h" 
 #include <Windows.h>
-
+#include <chrono>
 using namespace std;
 void CheckInput(string&, char&, vector <char>&, int, vector <char>); // Перевіряє введені користувачем дані
 bool CheckLetter(char&, string, vector <char>&, int&); // Перевіряє, чи буква є частиною потрібного слова
@@ -16,11 +16,17 @@ bool Exit();
 
 int main()
 {
+	
+	using Clock = std::chrono::high_resolution_clock;
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	srand(time(NULL));
+	
+	system("pause");
+
 	do
 	{
+		auto start = Clock::now();
 		string word, input;
 		char letter = ' ';
 		int mistakes = 0;
@@ -47,11 +53,19 @@ int main()
 			if (wordFound)
 			{
 				cout << "Вітаємо! Ви виграли!" << endl;
+				auto end = Clock::now();
+				auto ms = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+				cout << "Час у грі зайняв " << ms << " секунд" << std::endl;
 				break;
 			}
 			if (mistakes == 8) // Кількість спроб до закінчення гри.
 			{
 				cout << "Ви програли гру, пощастить наступного разу!" << endl;
+				auto end = Clock::now();
+				auto ms = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+
+				cout << "Час у грі зайняв " << ms << " секунд" << std::endl;
 				break;
 			}
 		}
@@ -61,16 +75,16 @@ int main()
 void CheckInput(string& input, char& letter, vector <char>& tempLetters, int mistakes, vector <char> tempWord)
 {
 	bool duplicate = false;
-	while (input.size() > 1 || (!(input[0] >= 'a' && input[0] <= 'z') && !(input[0] >= 'A' && input[0] <= 'Z'))) //Input has to be a single letter from a-z.
+	while (input.size() > 1 || (!(input[0] >= 'а' && input[0] <= 'я') && !(input[0] >= 'А' && input[0] <= 'Я'))) //Input has to be a single letter from a-z.
 	{
 		PrintInfo(tempWord, mistakes, tempLetters);
 		Gallows(mistakes);
 		cout << "Неправильне введення. Будь ласка, введіть одну букву a-z:";
 		getline(cin, input);
 	}
-	if (input[0] >= 'A' && input[0] <= 'Z') // перетворює велику літеру на малу.
-		letter = input[0] + 32;
-	else
+	//if (input[0] >= 'A' && input[0] <= 'Z') // перетворює велику літеру на малу.
+	//	letter = input[0] + 32;
+	/*else*/
 		letter = input[0];
 	for (int i = 0; i < tempLetters.size(); i++) // Перевіряє, чи введена буква вже була введена раніше.
 	{

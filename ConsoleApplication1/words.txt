@@ -1,7 +1,7 @@
-dog
-cat
-parrot
-horse
-lion
-rhino
-elephant
+собака
+кішка
+папуга
+кінь
+лев
+носоріг
+слон
