@@ -3,11 +3,15 @@
 #include <vector>
 #include <fstream>
 #include <conio.h> 
-#include "Gallows.h" 
-#include "File.h" 
 #include <Windows.h>
 #include <chrono>
+
+#include "Gallows.h" 
+#include "File.h" 
 using namespace std;
+
+
+
 void CheckInput(string&, char&, vector <char>&, int, vector <char>); // Перевіряє введені користувачем дані
 bool CheckLetter(char&, string, vector <char>&, int&); // Перевіряє, чи буква є частиною потрібного слова
 void PrintFields(vector <char>); // Друкує вектор.
@@ -105,7 +109,7 @@ void CheckInput(string& input, char& letter, vector <char>& tempLetters, int mis
 	{
 		PrintInfo(tempWord, mistakes, tempLetters);
 		Gallows(mistakes);
-		cout << "Ви вже вводили цю, спробуйте іншу:";
+		cout << "Ви вже вводили цю літеру, спробуйте іншу:";
 		getline(cin, input);
 		CheckInput(input, letter, tempLetters, mistakes, tempWord);
 	}

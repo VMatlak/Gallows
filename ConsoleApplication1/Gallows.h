@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include "Func.h"
 using namespace std;
 
 void Gallows(int mistakes) // Друкую шибеницю залежно від кількості помилок.
