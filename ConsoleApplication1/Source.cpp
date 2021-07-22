@@ -5,6 +5,7 @@
 #include <conio.h> 
 #include "Gallows.h" 
 #include "File.h" 
+#include <Windows.h>
 
 using namespace std;
 void CheckInput(string&, char&, vector <char>&, int, vector <char>); // Перевіряє введені користувачем дані
@@ -15,6 +16,8 @@ bool Exit();
 
 int main()
 {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	srand(time(NULL));
 	do
 	{
@@ -30,12 +33,12 @@ int main()
 			tempWord.push_back('_');
 		}
 		system("cls");
-		cout << "Welcome to the game of Gallows! The point of the game is to find the required word to win by inputting one letter at a time. Good luck!" << endl << "Press any key to continue." << endl;
+		cout << "\t\tЛаскаво просимо до гри Шибениця!\n\t Суть гри полягає в тому, щоб знайти потрібне слово для перемоги,\n\t\t вводячи по одній букві за раз. \n\t\t\t   Удачі!" << endl << "\n\n\t   Натисніть будь-яку кнопку, щоб продовжити." << endl;
 		_getch();
 		PrintInfo(tempWord, mistakes, tempLetters);
 		while (1)
 		{
-			cout << "Input a letter: ";
+			cout << "Введіть літеру: ";
 			getline(cin, input);
 			CheckInput(input, letter, tempLetters, mistakes, tempWord);
 			wordFound = CheckLetter(letter, word, tempWord, mistakes);
@@ -43,12 +46,12 @@ int main()
 			Gallows(mistakes);
 			if (wordFound)
 			{
-				cout << "Congratulations! You have won the game!" << endl;
+				cout << "Вітаємо! Ви виграли!" << endl;
 				break;
 			}
 			if (mistakes == 8) // Кількість спроб до закінчення гри.
 			{
-				cout << "You have lost the game, better luck next time!" << endl;
+				cout << "Ви програли гру, пощастить наступного разу!" << endl;
 				break;
 			}
 		}
@@ -62,7 +65,7 @@ void CheckInput(string& input, char& letter, vector <char>& tempLetters, int mis
 	{
 		PrintInfo(tempWord, mistakes, tempLetters);
 		Gallows(mistakes);
-		cout << "Wrong input, please input a single letter a-z: ";
+		cout << "Неправильне введення. Будь ласка, введіть одну букву a-z:";
 		getline(cin, input);
 	}
 	if (input[0] >= 'A' && input[0] <= 'Z') // перетворює велику літеру на малу.
@@ -80,7 +83,7 @@ void CheckInput(string& input, char& letter, vector <char>& tempLetters, int mis
 	{
 		PrintInfo(tempWord, mistakes, tempLetters);
 		Gallows(mistakes);
-		cout << "You have already inputted this letter, please try another: ";
+		cout << "Ви вже вводили цю, спробуйте іншу:";
 		getline(cin, input);
 		CheckInput(input, letter, tempLetters, mistakes, tempWord);
 	}
@@ -129,7 +132,7 @@ void PrintFields(vector <char> vector)
 bool Exit()
 {
 	string input;
-	cout << "Would you like to play again? Y/y for yes or any other key for no." << endl;
+	cout << "Бажаєте зіграти ще раз? Натисніть Y / y, якщо так  або будь-яку іншу кнопку, якщо ні." << endl;
 	getline(cin, input);
 	if (input[0] == 'Y' || input[0] == 'y')
 		return true;
@@ -140,9 +143,9 @@ bool Exit()
 void PrintInfo(vector <char> tempWord, int mistakes, vector <char> tempLetters)
 {
 	system("cls");
-	cout << "Required word: ";
+	cout << "Загадане слово слово: ";
 	PrintFields(tempWord);
-	cout << "Your inputted letters: ";
+	cout << "Введені літери: ";
 	PrintFields(tempLetters);
-	cout << "Number of tries left: " << 8 - mistakes << endl;
+	cout << "Кількість спроб, що залишились: " << 8 - mistakes << endl;
 }
